@@ -1,115 +1,319 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fuel & Assist</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fuel Mate</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --wood-base: #f0e6dc;
+      --wood-deep: #e4d2ba;
+      --wood-ink: #2b2219;
+      --accent: #0ea5e9;
+      --danger: #ef4444;
+      --success: #22c55e;
+    }
+    html, body {
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(135deg, #0b0f19, #0a0e17, #0f1720);
+      color: white;
+      margin: 0;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Animations */
+    @keyframes fadeScaleIn {0% {opacity:0; transform:scale(.85);}100% {opacity:1; transform:scale(1);}}
+    @keyframes fadeOut {0% {opacity:1;}100% {opacity:0; visibility:hidden;}}
+    .splash-animate {animation: fadeScaleIn 900ms ease-out forwards, fadeOut 900ms ease-in forwards 1600ms;}
+    .card-shadow {box-shadow: 0 15px 45px rgba(0,0,0,.35);}
+    .btn {transition: transform .12s ease, box-shadow .2s ease, background-color .2s ease;}
+    .btn:active {transform: translateY(1px) scale(.99);}
+    .focus-ring:focus {outline: none; box-shadow: 0 0 0 3px rgba(14,165,233,.35);}
+
+    /* Custom animations */
+    @keyframes slideUpFade {0% {opacity:0; transform:translateY(60px);}100% {opacity:1; transform:translateY(0);}}
+    @keyframes slideToLeft {0% {transform:translateX(0);}100% {transform:translateX(-170px);}}
+    @keyframes slideInRightFade {0% {opacity:0; transform:translateX(70px);}100% {opacity:1; transform:translateX(0);}}
+    .animate-slide-up-fade {animation: slideUpFade 1s cubic-bezier(.42,0,.58,1) forwards;}
+    .animate-slide-to-left {animation: slideToLeft 1s cubic-bezier(.42,0,.58,1) forwards;}
+    .animate-slide-in-right-fade {animation: slideInRightFade 1s cubic-bezier(.42,0,.58,1) forwards;}
+
+    /* Login Box Animation */
+    @keyframes fadeScaleUp {0% {opacity:0; transform:scale(0.9) translateY(20px);}100% {opacity:1; transform:scale(1) translateY(0);}}
+    .animate-login-box {animation: fadeScaleUp 0.8s ease-out forwards;}
+  </style>
 </head>
-<body class="bg-gray-100 font-sans">
+<body>
 
-  <!-- Main Container -->
-  <div class="min-h-screen flex flex-col items-center justify-center px-4 py-6">
+<!-- Login Page -->
+<div id="loginPage" class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-[#0b0f19] via-[#0a0e17] to-[#0f1720]">
+  <div class="bg-[var(--wood-base)] text-[var(--wood-ink)] rounded-3xl card-shadow p-8 w-full max-w-sm animate-login-box">
+    <h2 class="text-2xl font-bold mb-6 text-center">Welcome to Fuel Mate</h2>
+    <form id="loginForm" class="space-y-4">
+      <input id="username" type="email" placeholder="Email"
+        class="w-full px-4 py-3 rounded-xl border focus-ring placeholder:opacity-60"
+        style="background: var(--wood-deep); border-color:#cbb79c; color: var(--wood-ink);" />
+      <input id="password" type="password" placeholder="Password"
+        class="w-full px-4 py-3 rounded-xl border focus-ring placeholder:opacity-60"
+        style="background: var(--wood-deep); border-color:#cbb79c; color: var(--wood-ink);" />
+      <button type="submit" class="w-full py-3 rounded-xl font-semibold card-shadow btn"
+        style="background:#0ea5e9; color:white">Login</button>
+    </form>
+  </div>
+</div>
 
-    <!-- Card -->
-    <div class="w-full max-w-lg bg-white rounded-2xl shadow-xl p-6">
-      
-      <!-- Title -->
-      <h1 class="text-3xl font-bold text-blue-600 text-center mb-6">⛽ Fuel & Assist</h1>
+<!-- Splash Screen -->
+<div id="splash" class="fixed inset-0 z-40 flex flex-col items-center justify-center bg-gradient-to-br from-[#0b0f19] via-[#0a0e17] to-[#0f1720] hidden">
+  <svg class="h-20 w-20 text-white/95 mb-4 splash-animate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+    <path stroke-linecap="round" stroke-linejoin="round"
+      d="M7 20a2 2 0 0 1-2-2V6a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v11a2 2 0 0 1-2 2H7Zm8-9V7a1 1 0 0 1 1-1h1V4a1 1 0 1 1 2 0v2h1a1 0 0 1 1 1v4a4 4 0 0 1-4 4h-2"/>
+  </svg>
+  <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight splash-animate">Fuel Mate</h1>
+  <p class="text-white/70 mt-3 text-sm tracking-wide splash-animate">
+    Smart fuel tracking & ride assistant
+  </p>
+  <div class="flex items-center space-x-2 mt-5 splash-animate">
+    <div class="w-2 h-2 rounded-full bg-white/70 animate-bounce"></div>
+    <div class="w-2 h-2 rounded-full bg-white/70 animate-bounce [animation-delay:0.2s]"></div>
+    <div class="w-2 h-2 rounded-full bg-white/70 animate-bounce [animation-delay:0.4s]"></div>
+  </div>
+</div>
 
-      <!-- Vehicle Selection -->
-      <div class="mb-4">
-        <label class="block text-sm font-semibold text-gray-700 mb-2">Select Vehicle</label>
-        <select id="vehicleSelect" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400">
-          <option value="">Choose your vehicle</option>
-          <option value="splendor2018">2018 Splendor</option>
-          <option value="activa2020">2020 Activa</option>
-        </select>
+<!-- Header Logo/Text -->
+<div id="headerLogo" class="absolute top-8 left-1/2 transform -translate-x-1/2 opacity-0 text-center transition-opacity duration-700">
+  <h1 class="text-3xl font-bold text-white/90">Fuel Mate</h1>
+  <p class="mt-1 text-white/60 text-sm">Smart fuel tracking & ride assistant</p>
+</div>
+
+<!-- My Account Button -->
+<button class="btn absolute top-6 right-6 py-2 px-4 rounded-xl bg-white/10 hover:bg-white/20 font-semibold z-20">My Account</button>
+
+<!-- Main Container -->
+<div id="mainApp" class="min-h-screen flex items-center justify-center pt-24 hidden">
+  <div id="panelContainer" class="flex flex-col items-center justify-center gap-10 w-full max-w-4xl transition-all duration-1000 md:flex-row md:justify-center">
+    <!-- Ride Controls -->
+    <div id="rideControls"
+      class="rounded-3xl card-shadow p-6 md:p-7 w-full max-w-xs md:max-w-md bg-[var(--wood-base)] text-[var(--wood-ink)] opacity-0">
+      <h3 class="text-xl font-extrabold mb-5 tracking-tight">Ride Controls</h3>
+      <label for="vehicleSelect" class="block text-sm font-semibold mb-2 opacity-90">Select Vehicle</label>
+      <select id="vehicleSelect" class="w-full mb-4 px-4 py-3 rounded-xl border focus-ring"
+        style="background: var(--wood-deep); border-color:#cbb79c; color: var(--wood-ink);">
+        <option value="">Choose your vehicle</option>
+        <option value="2018 Splendor">2018 Splendor</option>
+        <option value="2020 Activa">2020 Activa</option>
+      </select>
+      <label for="fuelInput" class="block text-sm font-semibold mb-2 opacity-90">Fuel Filled (L)</label>
+      <input id="fuelInput" type="number" inputmode="decimal" min="0" step="0.1" placeholder="Enter liters"
+        class="w-full mb-6 px-4 py-3 rounded-xl border focus-ring placeholder:opacity-60"
+        style="background: var(--wood-deep); border-color:#cbb79c; color: var(--wood-ink);" />
+      <div class="flex gap-4">
+        <button id="startRideBtn" class="btn flex-1 py-3 rounded-xl font-semibold card-shadow"
+          style="background:#0ea5e9; color:white">Start Ride</button>
+        <button id="endRideBtn" class="btn flex-1 py-3 rounded-xl font-semibold card-shadow"
+          style="background:#ef4444; color:white">End Ride</button>
       </div>
+    </div>
 
-      <!-- Fuel Input (₹ instead of Liters) -->
-      <div class="mb-4">
-        <label class="block text-sm font-semibold text-gray-700 mb-2">Fuel Filled (₹)</label>
-        <input id="fuelInput" type="number" placeholder="Enter amount in Rs" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400">
-      </div>
-
-      <!-- Buttons -->
-      <div class="flex justify-between gap-4 mb-6">
-        <button id="startRideBtn" class="flex-1 bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-lg transition">Start Ride</button>
-        <button id="endRideBtn" class="flex-1 bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-lg transition">End Ride</button>
-      </div>
-
-      <!-- Results Section -->
-      <div id="results" class="bg-gray-50 border rounded-xl p-4 space-y-2">
-        <h2 class="text-lg font-bold text-gray-700">Ride Summary</h2>
-        <p class="text-sm"><strong>Mileage:</strong> <span id="mileage">-- km/l</span></p>
-        <p class="text-sm"><strong>Distance:</strong> <span id="distance">-- km</span></p>
-        <p class="text-sm"><strong>Fuel Left:</strong> <span id="fuelLeft">-- L</span></p>
-        <p class="text-sm"><strong>Fuel %:</strong> <span id="fuelPercent">-- %</span></p>
-        <p class="text-sm"><strong>Alert:</strong> <span id="alertMsg">--</span></p>
+    <!-- Ride Summary -->
+    <div id="rideSummary"
+      class="rounded-3xl card-shadow p-6 md:p-7 w-full max-w-xs md:max-w-md bg-[var(--wood-base)] text-[var(--wood-ink)] opacity-0 pointer-events-none">
+      <h3 class="text-xl font-extrabold mb-5 tracking-tight">Ride Summary</h3>
+      <div id="results" class="grid grid-cols-2 gap-4">
+        <div class="rounded-2xl p-4 bg-[var(--wood-deep)]"><div class="text-xs opacity-70">Mileage</div><div id="mileage" class="text-lg font-bold">— km/l</div></div>
+        <div class="rounded-2xl p-4 bg-[var(--wood-deep)]"><div class="text-xs opacity-70">Distance</div><div id="distance" class="text-lg font-bold">— km</div></div>
+        <div class="rounded-2xl p-4 bg-[var(--wood-deep)]"><div class="text-xs opacity-70">Fuel Used</div><div id="fuelUsed" class="text-lg font-bold">— L</div></div>
+        <div class="rounded-2xl p-4 bg-[var(--wood-deep)]"><div class="text-xs opacity-70">Fuel Left</div><div id="fuelLeft" class="text-lg font-bold">— L</div></div>
+        <div class="rounded-2xl p-4 bg-[var(--wood-deep)]"><div class="text-xs opacity-70">Fuel %</div><div id="fuelPercent" class="text-lg font-bold">— %</div></div>
+        <div class="rounded-2xl p-4 col-span-2 flex items-center justify-between gap-4 bg-[var(--wood-deep)]">
+          <div class="text-xs opacity-70">Alert</div><div id="alertMsg" class="text-base font-semibold">—</div>
+        </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Chatbot (Bottom Right Floating) -->
-  <div class="fixed bottom-4 right-4 w-80 bg-white rounded-2xl shadow-lg border flex flex-col">
-    <!-- Header -->
-    <div class="bg-blue-600 text-white p-3 rounded-t-2xl font-semibold">
-      🤖 FuelBot
-    </div>
-    
-    <!-- Chat messages -->
-    <div class="flex-1 p-3 overflow-y-auto h-48 text-sm text-gray-700 space-y-2">
-      <div class="bg-gray-100 p-2 rounded-lg">Bot: Hello! Ask me about mileage or fuel.</div>
-    </div>
-
-    <!-- Input Area -->
-    <div class="flex border-t">
-      <input type="text" placeholder="Ask something..." class="flex-1 p-2 rounded-bl-2xl focus:outline-none">
-      <button class="bg-blue-600 text-white px-4 py-2 rounded-br-2xl hover:bg-blue-700 transition">Send</button>
-    </div>
-  </div>
-
+<!-- ✅ Script: keeps your animations, adds backend calls -->
 <script>
-  // Handle Start Ride
-  document.getElementById("startRideBtn").addEventListener("click", async () => {
-    const vehicle = document.getElementById("vehicleSelect").value;
-    const fuel = document.getElementById("fuelInput").value;
+document.addEventListener("DOMContentLoaded", function () {
+  const loginForm = document.getElementById("loginForm");
+  const loginPage = document.getElementById("loginPage");
+  const splash = document.getElementById("splash");
+  const mainApp = document.getElementById("mainApp");
+  const headerLogo = document.getElementById("headerLogo");
 
-    if (!vehicle || !fuel) {
-      alert("Please select a vehicle and enter fuel in ₹");
-      return;
+  const rideControls = document.getElementById("rideControls");
+  const rideSummary = document.getElementById("rideSummary");
+  const panelContainer = document.getElementById("panelContainer");
+  const startBtn = document.getElementById("startRideBtn");
+  const endBtn = document.getElementById("endRideBtn");
+
+  const vehicleSelect = document.getElementById("vehicleSelect");
+  const fuelInput = document.getElementById("fuelInput");
+
+  const mileageEl = document.getElementById("mileage");
+  const distanceEl = document.getElementById("distance");
+  const fuelUsedEl = document.getElementById("fuelUsed");
+  const fuelLeftEl = document.getElementById("fuelLeft");
+  const fuelPercentEl = document.getElementById("fuelPercent");
+  const alertMsg = document.getElementById("alertMsg");
+
+  let currentRideId = null;
+  let updateTimer = null;
+
+  function setAlert(msg) { alertMsg.textContent = msg; }
+  function resetSummary() {
+    mileageEl.textContent = "— km/l";
+    distanceEl.textContent = "— km";
+    fuelUsedEl.textContent = "— L";
+    fuelLeftEl.textContent = "— L";
+    fuelPercentEl.textContent = "— %";
+  }
+
+  // Login → splash → main app reveal with your animations
+  loginForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const u = document.getElementById("username").value.trim();
+    const p = document.getElementById("password").value.trim();
+    if (!u || !p) { alert("Enter username and password"); return; }
+
+    loginPage.style.display = "none";
+    splash.style.display = "flex";
+
+    setTimeout(() => {
+      splash.style.display = "none";
+      headerLogo.style.opacity = "1";
+      mainApp.classList.remove("hidden");
+
+      // Animate ride controls into view as you designed
+      rideControls.classList.add("animate-slide-up-fade");
+      rideControls.style.opacity = "1";
+      panelContainer.classList.add("justify-center");
+    }, 2500);
+  });
+
+  // Dummy/real location ping loop for Level 1.5 (optional)
+  async function pingLocation(rideId) {
+    // Try real location if available
+    function getCoords() {
+      return new Promise((resolve) => {
+        if (!navigator.geolocation) {
+          resolve(null);
+        } else {
+          navigator.geolocation.getCurrentPosition(
+            (pos) => resolve({ lat: pos.coords.latitude, lon: pos.coords.longitude }),
+            () => resolve(null),
+            { enableHighAccuracy: true, timeout: 3000 }
+          );
+        }
+      });
+    }
+
+    const coords = await getCoords();
+    let lat, lon;
+    if (coords) {
+      lat = coords.lat;
+      lon = coords.lon;
+    } else {
+      // fallback jitter near a fixed point (only for local testing)
+      lat = 12.97 + Math.random() * 0.01;
+      lon = 77.59 + Math.random() * 0.01;
     }
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/start_ride", {
+      await fetch("http://127.0.0.1:5000/update_location", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ vehicle: vehicle, fuel: parseFloat(fuel) })
+        body: JSON.stringify({ ride_id: rideId, lat, lon })
       });
+    } catch (e) {
+      // silent for now
+    }
+  }
 
-      const data = await response.json();
+  // Start Ride
+  startBtn.addEventListener("click", async () => {
+    resetSummary();
+    setAlert("⏳ Starting ride…");
 
-      // Update result placeholders
-      document.getElementById("mileage").textContent = `${data.mileage} km/l`;
-      document.getElementById("distance").textContent = `${data.distance} km`;
-      document.getElementById("fuelLeft").textContent = `${data.fuel_left} L`;
-      document.getElementById("fuelPercent").textContent = `${data.fuel_percent}%`;
+    const vehicle = vehicleSelect.value;
+    const fuel = parseFloat(fuelInput.value);
 
-      // Alert condition
-      if (data.fuel_percent < 25) {
-        document.getElementById("alertMsg").textContent = "⚠️ Low Fuel! Please refill soon.";
-        document.getElementById("alertMsg").classList.add("text-red-600", "font-bold");
+    if (!vehicle) { setAlert("⚠️ Please select a vehicle first"); return; }
+    if (!fuel || fuel <= 0) { setAlert("⚠️ Enter fuel filled (in liters)"); return; }
+
+    try {
+      const res = await fetch("http://127.0.0.1:5000/start_ride", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ vehicle, fuel_filled: fuel })
+      });
+      const data = await res.json();
+
+      if (data.ride_id) {
+        currentRideId = data.ride_id;
+        setAlert("✅ " + (data.message || "Ride started"));
+
+        // Start periodic location pings every 5s (test mode)
+        if (updateTimer) clearInterval(updateTimer);
+        updateTimer = setInterval(() => {
+          if (currentRideId) pingLocation(currentRideId);
+        }, 5000);
       } else {
-        document.getElementById("alertMsg").textContent = "✅ Fuel level is OK.";
-        document.getElementById("alertMsg").classList.remove("text-red-600", "font-bold");
+        setAlert(data.error ? "❌ " + data.error : "❌ Could not start ride");
       }
-
-    } catch (error) {
-      console.error("Error:", error);
-      alert("Something went wrong. Check if Flask server is running!");
+    } catch (err) {
+      setAlert("❌ Server error while starting ride");
     }
   });
+
+  // End Ride
+  endBtn.addEventListener("click", async () => {
+    if (!currentRideId) { setAlert("⚠️ No active ride found"); return; }
+    setAlert("⏳ Ending ride…");
+
+    try {
+      const res = await fetch("http://127.0.0.1:5000/end_ride", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ride_id: currentRideId })
+      });
+      const data = await res.json();
+
+      // Stop location pings
+      if (updateTimer) { clearInterval(updateTimer); updateTimer = null; }
+
+      if (data && typeof data === "object" && "distance" in data) {
+        mileageEl.textContent = (data.mileage ?? "—") + " km/l";
+        distanceEl.textContent = (data.distance ?? "—") + " km";
+        fuelUsedEl.textContent = (data.fuel_used ?? "—") + " L";
+        fuelLeftEl.textContent = (data.fuel_left ?? "—") + " L";
+        fuelPercentEl.textContent = (data.fuel_percent ?? "—") + " %";
+        setAlert(data.alert || "✅ Ride ended");
+
+        // Reveal summary with your animation
+        rideSummary.classList.remove("pointer-events-none");
+        rideSummary.classList.add("animate-slide-in-right-fade");
+        rideSummary.style.opacity = "1";
+
+        if (window.innerWidth >= 768) {
+          rideControls.classList.remove("animate-slide-up-fade");
+          rideControls.classList.add("animate-slide-to-left");
+          panelContainer.classList.remove("justify-center");
+          panelContainer.classList.add("md:justify-start");
+        }
+      } else {
+        setAlert(data.error ? "❌ " + data.error : "❌ Error ending ride");
+      }
+    } catch (err) {
+      setAlert("❌ Server error while ending ride");
+    } finally {
+      currentRideId = null;
+    }
+  });
+});
 </script>
 
 </body>
