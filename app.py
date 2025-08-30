@@ -10,7 +10,7 @@ vehicles = {
     "activa2020": {"tank_capacity": 5.3, "mileage": 45}     # ~45 km/l
 }
 
-PETROL_PRICE = 100  # Rs per liter
+PETROL_PRICE = 500  # Rs per liter
 
 @app.route("/start_ride", methods=["POST"])
 def start_ride():
